@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#define metasize sizeof(freeNode)
 
 //Data structure that represents a list of free memory regions
 struct freeNode_t{
@@ -10,6 +9,8 @@ struct freeNode_t{
   struct freeNode_t * prev;
 };
 typedef struct freeNode_t freeNode;
+
+#define metasize sizeof(freeNode)
 
 freeNode *head = NULL;
 freeNode *tail = NULL;
@@ -29,7 +30,7 @@ void bf_free(void *ptr);
 //Performance study
 unsigned long get_data_segment_size(); //in bytes
 unsigned long get_data_segment_free_space_size(); //in bytes
-void merge(freeNode *block);
-unsigned long totalSBRKed = 0;
-unsigned long allocated = 0;
-void printList();
+
+unsigned long entireHeap = 0;
+unsigned long freeSz = 0;
+
