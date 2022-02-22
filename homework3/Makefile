@@ -1,8 +1,15 @@
+CCFLAGS=--std=gnu++98 -pedantic -Wall -Werror -ggdb3 -std=c++11
+
 all: ringmaster player
 
-ringmaster: ringmaster.cpp socket.h potato.h
-	g++ -g -o ringmaster ringmaster.cpp
-player: player.cpp socket.h potato.h
-	g++ -g -o player player.cpp
+ringmaster:  ringmaster.o socket.o
+	g++ -o ringmaster $(CCFLAGS)  ringmaster.o socket.o
+
+player:  player.o socket.o
+	g++ -o player $(CCFLAGS)  player.o socket.o
+
+%.o: %.cpp potato.h socket.h
+	g++ -c $(CCFLAGS) $<
+
 clean:
-	rm -rf ringmaster player
+	rm -f *.o  *~ ringmaster player

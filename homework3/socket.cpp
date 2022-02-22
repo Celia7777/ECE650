@@ -73,7 +73,7 @@ int filefdSelect(std::vector<int> &socket_fds, Potato &p){
     fd_set readfds;
     struct timeval tv;
     FD_ZERO(&readfds);
-    for(int id = 0; id < socket_fds.size(); id++){
+    for(size_t id = 0; id < socket_fds.size(); id++){
         FD_SET(socket_fds[id], &readfds);
     }
     int n = *(max_element(socket_fds.begin(), socket_fds.end())) + 1;
@@ -82,7 +82,7 @@ int filefdSelect(std::vector<int> &socket_fds, Potato &p){
     tv.tv_usec = 600000;
     int rv = select(n, &readfds, NULL, NULL, &tv);
     int len;
-    for(int id = 0; id < socket_fds.size(); id++){
+    for(size_t id = 0; id < socket_fds.size(); id++){
         if(rv==-1){
             perror("error in select"); // error occurred in select()
         }
@@ -92,7 +92,7 @@ int filefdSelect(std::vector<int> &socket_fds, Potato &p){
         } 
         else{
             if(FD_ISSET(socket_fds[id], &readfds)){
-            len = recv(socket_fds[id], &p, sizeof(p), MSG_WAITALL);
+            len = recv(socket_fds[id], &p, sizeof(p), MSG_WAITALL);//0
             return len;
             }
         }

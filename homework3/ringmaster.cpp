@@ -105,9 +105,9 @@ int main(int argc, char *argv[]){
     //shuts the game down (by sending a message to each player 
     //to indicate they may shut down as the game is over
     //shut down signal
-    for (int id = 0; id < players_num; id++) {
-        send(connect_to_players_fd[id], &potato, sizeof(potato), 0);
-    }
+    // for (int id = 0; id < players_num; id++) {
+    //     send(connect_to_players_fd[id], &potato, sizeof(potato), 0);
+    // }
     std::cout << "Trace of potato:" << std::endl;
     potato.printPath();
     //shuts the game down

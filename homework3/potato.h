@@ -16,11 +16,16 @@ class Potato {
       }
 
   void printPath(){
-      for(int i = 0; i < path_idx - 1; i++){
-          printf("%d,", path[i]);
+      for(int i = 0; i < path_idx; i++){
+          std::cout << path[i];
+          if(i != path_idx - 1){
+              std::cout<<",";
+          }
+          else{
+              std::cout<<std::endl;
+          }
       }
-      //print the last one
-      printf("%d\n", path[path_idx - 1]);
+      //std::cout<<"path index: "<<path_idx<<std::endl;
   }  
 };
 

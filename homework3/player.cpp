@@ -66,25 +66,31 @@ int main(int argc, char *argv[]){
     routing_fds.push_back(neighbor_fd_right);
     routing_fds.push_back(neighbor_fd_left);
     
+    //int i = 1;
     while(1){
+        //std::cout<<"in while "<<i<<std::endl;
         int len = filefdSelect(routing_fds, potato);
+        //std::cout << "length is: "<<len<<std::endl;
         //shut down
-        if(len == 0 || potato.hops_num == 0){
+        if(len == 0){
             break;
         }
-        else{
-            potato.hops_num--;
-            potato.path[potato.path_idx] = id;
-            potato.path_idx++;
+        else if(potato.hops_num > 0){
             //handle the last potato, send to ringmaster
             if(potato.hops_num == 1){
+                potato.hops_num--;
+                potato.path[potato.path_idx] = id;
+                potato.path_idx++;
                 send(player_as_client_fd, &potato, sizeof(potato), 0);
                 //When number of hops is reached:
                 std::cout<<"I'm it"<<std::endl;
-                break;
+                //break;
             }
             //randomly choose the left or right neighbor
             else{
+                potato.hops_num--;
+                potato.path[potato.path_idx] = id;
+                potato.path_idx++;
                 srand((unsigned int)time(NULL)+potato.path_idx);
                 int random = rand() % 2;
                 if (random == 0) {
@@ -97,12 +103,13 @@ int main(int argc, char *argv[]){
                 }
             }
         }
+        //i++;
         
 
     }
 
     //close sockets
-    for(int i = 0; i < routing_fds.size(); i++){
+    for(size_t i = 0; i < routing_fds.size(); i++){
         close(routing_fds[i]);
     }
 
